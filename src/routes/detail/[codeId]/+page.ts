@@ -1,23 +1,8 @@
 import { error } from '@sveltejs/kit';
 
-export function load({ params }: { params: { codeId: string } }) {
-	console.log(params);
+export function load({ params: { codeId } }: { params: { codeId: string } }) {
 	return {
-		title: 'パンドラのコード',
-		codes: [
-			{
-				value: 'sample',
-				date: '2021/01/01'
-			},
-			{
-				value: 'sample2',
-				date: '2021/01/02'
-			},
-			{
-				value: 'sample3',
-				date: '2021/01/03'
-			}
-		]
+		codeId
 	};
 
 	error(404, 'Not found');

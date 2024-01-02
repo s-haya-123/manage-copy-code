@@ -1,7 +1,9 @@
-export const objectStoreName = 'CopyCode';
+export const objectStoreIdentify = {
+	name: 'CopyCodeTable'
+};
 
 export type CopyCodeTable = {
-	id: string;
+	id: number;
 	tableName: string;
 };
 
@@ -11,8 +13,8 @@ export class CopyCodeTableIndexedDB {
 	constructor(private db: IDBDatabase) {}
 	findAll(): Promise<CopyCodeTable[]> {
 		return new Promise((resolve, reject) => {
-			const transaction = this.db.transaction(objectStoreName, 'readonly');
-			const objectStore = transaction.objectStore(objectStoreName);
+			const transaction = this.db.transaction(objectStoreIdentify.name, 'readonly');
+			const objectStore = transaction.objectStore(objectStoreIdentify.name);
 			const request = objectStore.getAll();
 			transaction.abort = () => {
 				return reject(new Error('TransactionがAbortしました'));
@@ -27,10 +29,10 @@ export class CopyCodeTableIndexedDB {
 			transaction.commit();
 		});
 	}
-	insert(reference: IDBCopyCodeTable): Promise<string> {
+	insert(reference: IDBCopyCodeTable): Promise<number> {
 		return new Promise((resolve, reject) => {
-			const transaction = this.db.transaction(objectStoreName, 'readwrite');
-			const objectStore = transaction.objectStore(objectStoreName);
+			const transaction = this.db.transaction(objectStoreIdentify.name, 'readwrite');
+			const objectStore = transaction.objectStore(objectStoreIdentify.name);
 			const request = objectStore.put(reference);
 			transaction.abort = () => {
 				return reject(new Error('TransactionがAbortしました'));
@@ -39,7 +41,7 @@ export class CopyCodeTableIndexedDB {
 				return reject(new Error('保存に失敗しました'));
 			};
 			request.onsuccess = function () {
-				return resolve(this.result as string);
+				return resolve(this.result as number);
 			};
 			transaction.commit();
 		});

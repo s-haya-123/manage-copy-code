@@ -5,11 +5,11 @@ import { writable } from 'svelte/store';
 
 const db = await prepareDb();
 
-const createCopyCodeStore = () => {
+export const createCopyCodeStore = (tableId: string) => {
 	const { subscribe, set, update } = writable<IDBCopyCode[]>([]);
 
 	const copyCodeDb = new CopyCodeIndexedDB(db);
-	copyCodeDb.findAll().then((copyCodes) => {
+	copyCodeDb.findAll(tableId).then((copyCodes) => {
 		set(copyCodes);
 	});
 
@@ -42,5 +42,4 @@ const createCopyCodeTableStore = () => {
 	};
 };
 
-export const copyCode = createCopyCodeStore();
 export const copyCodeTable = createCopyCodeTableStore();

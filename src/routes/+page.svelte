@@ -34,8 +34,8 @@
 					{/each}
 					<Item
 						on:click={() => {
-							copyCodeTable.insert('test');
-						}}>パンドラのコード</Item
+							copyCodeTable.insert('aaaaa');
+						}}>ああああああ</Item
 					>
 				</List>
 			</Content>
