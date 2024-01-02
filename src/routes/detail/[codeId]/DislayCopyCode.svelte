@@ -4,21 +4,16 @@
 
 	let copyText: string = '';
 
-	const maskString = (str: string, numVisibleChars: number) => 
-        str.substring(0, numVisibleChars) 
-            + '*'.repeat(Math.max(0, str.length - numVisibleChars));
-		
+	const maskString = (str: string, numVisibleChars: number) =>
+		str.substring(0, numVisibleChars) + '*'.repeat(Math.max(0, str.length - numVisibleChars));
 
-    const changeCopyText = async () => {
-        copyText = maskString(await navigator.clipboard.readText(), 5);
-    };
-    onMount(changeCopyText);
+	const changeCopyText = async () => {
+		copyText = maskString(await navigator.clipboard.readText(), 5);
+	};
+	onMount(changeCopyText);
 </script>
 
-<svelte:window
-    on:copy={changeCopyText}
-    on:focus={changeCopyText}
-/>
+<svelte:window on:copy={changeCopyText} on:focus={changeCopyText} />
 
 <div class="wrapper">
 	<div>clipboardの内容</div>
