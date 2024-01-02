@@ -1,11 +1,14 @@
-<script>
+<script lang="ts">
 	import ManageCopyCodeTitle from '$lib/ManageCopyCodeTitle.svelte';
 	import VerticalList from '$lib/VerticalList.svelte';
 	import List, { Separator, Item } from '@smui/list';
 	import Paper, { Title, Content } from '@smui/paper';
 
-	/** @type {import('./$types').PageData} */
 	export let data;
+
+	const copyCode = (code: string) => () => {
+		navigator.clipboard.writeText(code);
+	}
 </script>
 
 <VerticalList gap={30}>
@@ -13,19 +16,20 @@
 	<div class="item">
 		<Paper>
 			<Title>{data.title}</Title>
-		</Paper>
-	</div>
-	<div class="item">
-		<Paper>
-			<Title>一覧</Title>
 			<Content>
 				<List class="demo-list">
 					<Separator />
 					{#each data.codes as code}
-						<Item on:SMUI:action={() => {}}>{code.value}</Item>
+						<Item on:SMUI:action={copyCode(code.value)}>{code.value}</Item>
 					{/each}
 				</List>
 			</Content>
 		</Paper>
 	</div>
 </VerticalList>
+
+<style>
+	.item {
+		width: 100%;
+	}
+</style>

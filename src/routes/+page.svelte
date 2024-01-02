@@ -5,7 +5,6 @@
 	import VerticalList from '$lib/VerticalList.svelte';
 	import ManageCopyCodeTitle from '$lib/ManageCopyCodeTitle.svelte';
 
-	let clicked = 'nothing yet';
 	let registerText = '';
 </script>
 
@@ -25,21 +24,16 @@
 	</div>
 	<div class="item">
 		<Paper>
-			<Title>一覧</Title>
+			<Title>履歴</Title>
 			<Content>
 				<List class="demo-list">
 					<Separator />
-					<Item><Text><a href="/detail/sample2">パンドラのコード</a></Text></Item>
-					<Item on:SMUI:action={() => (clicked = 'Copy')}><Text>Copy</Text></Item>
-					<Item on:SMUI:action={() => (clicked = 'Paste')}><Text>Paste</Text></Item>
-					<Item on:SMUI:action={() => (clicked = 'Delete')}><Text>Delete</Text></Item>
+					<Item><a href="/detail/sample2" class="item">パンドラのコード</a></Item>
 				</List>
 			</Content>
 		</Paper>
 	</div>
 </VerticalList>
-
-<pre class="status">Clicked: {clicked}</pre>
 
 <style>
 	.item {
