@@ -39,6 +39,7 @@
 	<div class="item">
 		<Paper>
 			<Title>{tableName}</Title>
+			
 			<Separator />
 			<Content>
 				<List>

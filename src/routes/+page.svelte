@@ -1,5 +1,5 @@
 <script lang="ts">
-	import List, { Item, Separator, Text } from '@smui/list';
+	import List, { Item, Separator } from '@smui/list';
 	import Paper, { Title, Content } from '@smui/paper';
 	import Textfield from '@smui/textfield';
 	import VerticalList from '$lib/VerticalList.svelte';
