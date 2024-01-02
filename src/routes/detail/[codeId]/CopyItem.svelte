@@ -25,7 +25,7 @@
 </script>
 
 <Snackbar bind:this={snackbarWithClose}>
-	<SnackbarLabel>コピーしました: {copyText}</SnackbarLabel>
+	<SnackbarLabel><div class="ellipsis">コピーしました: {copyText}</div></SnackbarLabel>
 	<Actions>
 		<IconButton class="material-icons" title="Dismiss">close</IconButton>
 	</Actions>
