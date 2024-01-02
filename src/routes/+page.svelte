@@ -29,7 +29,7 @@
 			<Content>
 				<List class="demo-list">
 					<Separator />
-					<Item on:SMUI:action={() => (clicked = 'Cut')}><Text>Cut</Text></Item>
+					<Item><Text><a href="/detail/sample2">パンドラのコード</a></Text></Item>
 					<Item on:SMUI:action={() => (clicked = 'Copy')}><Text>Copy</Text></Item>
 					<Item on:SMUI:action={() => (clicked = 'Paste')}><Text>Paste</Text></Item>
 					<Item on:SMUI:action={() => (clicked = 'Delete')}><Text>Delete</Text></Item>
@@ -44,5 +44,9 @@
 <style>
 	.item {
 		width: 100%;
+	}
+	a {
+		text-decoration: none;
+		color: inherit;
 	}
 </style>

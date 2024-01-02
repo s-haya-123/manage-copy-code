@@ -3,9 +3,9 @@
 </script>
 
 <TopAppBar variant="static" color="primary">
-    <Row>
-        <Section>
-            <BarTitle>セーブデータ管理</BarTitle>
-        </Section>
-    </Row>
+	<Row>
+		<Section>
+			<BarTitle>セーブデータ管理</BarTitle>
+		</Section>
+	</Row>
 </TopAppBar>
