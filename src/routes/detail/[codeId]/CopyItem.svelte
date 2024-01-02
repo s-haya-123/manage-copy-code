@@ -12,7 +12,7 @@
 		snackbarWithClose.open();
 	};
 	function formatDate(dateString: string) {
-        const date = new Date(dateString);
+		const date = new Date(dateString);
 		const year = date.getFullYear();
 		const month = (date.getMonth() + 1).toString().padStart(2, '0');
 		const day = date.getDate().toString().padStart(2, '0');
@@ -30,4 +30,15 @@
 		<IconButton class="material-icons" title="Dismiss">close</IconButton>
 	</Actions>
 </Snackbar>
-<Item on:SMUI:action={copyCode(copyText)}>{formatDate(date)} : {copyText}</Item>
+<Item on:SMUI:action={copyCode(copyText)}>
+	<div class="ellipsis">{formatDate(date)} : {copyText}</div>
+</Item>
+
+<style>
+	.ellipsis {
+		text-overflow: ellipsis;
+		width: 100%;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+</style>

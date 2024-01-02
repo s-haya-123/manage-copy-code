@@ -10,7 +10,7 @@ export const createCopyCodeStore = (tableId: number) => {
 
 	const copyCodeDb = new CopyCodeIndexedDB(db);
 	copyCodeDb.findAll(tableId).then((copyCodes) => {
-		set(copyCodes.sort((a, b) => - a.id + b.id));
+		set(copyCodes.sort((a, b) => -a.id + b.id));
 	});
 
 	return {
@@ -32,7 +32,7 @@ const createCopyCodeTableStore = () => {
 
 	const copyCodeTableDb = new CopyCodeTableIndexedDB(db);
 	copyCodeTableDb.findAll().then((copyCodes) => {
-		set(copyCodes.sort((a, b) => - a.id + b.id));
+		set(copyCodes.sort((a, b) => -a.id + b.id));
 	});
 
 	return {
