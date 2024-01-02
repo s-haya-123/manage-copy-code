@@ -10,7 +10,7 @@ export const createCopyCodeStore = (tableId: number) => {
 
 	const copyCodeDb = new CopyCodeIndexedDB(db);
 	copyCodeDb.findAll(tableId).then((copyCodes) => {
-		set(copyCodes);
+		set(copyCodes.sort((a, b) => - a.id + b.id));
 	});
 
 	return {
@@ -18,7 +18,7 @@ export const createCopyCodeStore = (tableId: number) => {
 		insert: async (copyCode: CopyCode) => {
 			const id = await copyCodeDb.insert(copyCode);
 			update((copyCodes) => {
-				return [...copyCodes, { ...copyCode, id }];
+				return [{ ...copyCode, id }, ...copyCodes];
 			});
 		}
 	};
@@ -32,7 +32,7 @@ const createCopyCodeTableStore = () => {
 
 	const copyCodeTableDb = new CopyCodeTableIndexedDB(db);
 	copyCodeTableDb.findAll().then((copyCodes) => {
-		set(copyCodes);
+		set(copyCodes.sort((a, b) => - a.id + b.id));
 	});
 
 	return {
@@ -40,7 +40,7 @@ const createCopyCodeTableStore = () => {
 		insert: async (tableName: string): Promise<number> => {
 			const id = await copyCodeTableDb.insert({ tableName });
 			update((copyCodeTables) => {
-				return [...copyCodeTables, { tableName, id }];
+				return [{ tableName, id }, ...copyCodeTables];
 			});
 			return id;
 		}

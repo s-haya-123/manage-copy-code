@@ -8,7 +8,7 @@
 	export let copyCodeStore: ReturnType<typeof createCopyCodeStore> | undefined;
 	export let codeId: string;
 	let snackbarWithClose: Snackbar;
-    let text: string = '';
+	let text: string = '';
 
 	const registerCopyCode = async () => {
 		if (!copyCodeStore) return;
@@ -19,7 +19,7 @@
 			date: new Date().toISOString()
 		});
 
-        text = code;
+		text = code;
 		snackbarWithClose.open();
 	};
 </script>

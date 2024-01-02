@@ -11,7 +11,6 @@
 	import CopyItem from './CopyItem.svelte';
 	import RegisterButton from './RegisterButton.svelte';
 
-
 	export let data;
 
 	let tableName: string = '';
@@ -41,13 +40,13 @@
 		<Paper>
 			<div class="title">
 				<Title>{tableName}</Title>
-				<RegisterButton copyCodeStore={copyCodeStore} codeId={data.codeId} />
+				<RegisterButton {copyCodeStore} codeId={data.codeId} />
 			</div>
 			<Separator />
 			<Content>
 				<List>
 					{#each copyCodes as value}
-						<CopyItem copyText={value.code} />
+						<CopyItem copyText={value.code} date={value.date} />
 					{/each}
 				</List>
 			</Content>
