@@ -8,7 +8,7 @@
 
 	const copyCode = (code: string) => () => {
 		navigator.clipboard.writeText(code);
-	}
+	};
 </script>
 
 <VerticalList gap={30}>

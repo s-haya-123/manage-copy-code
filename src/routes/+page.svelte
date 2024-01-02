@@ -4,6 +4,7 @@
 	import Textfield from '@smui/textfield';
 	import VerticalList from '$lib/VerticalList.svelte';
 	import ManageCopyCodeTitle from '$lib/ManageCopyCodeTitle.svelte';
+	import { copyCodeTable } from '$lib/store/copyCode';
 
 	let registerText = '';
 </script>
@@ -28,7 +29,14 @@
 			<Content>
 				<List class="demo-list">
 					<Separator />
-					<Item><a href="/detail/sample2" class="item">パンドラのコード</a></Item>
+					{#each $copyCodeTable as code}
+						<Item><a href={`/detail/${code.id}`} class="item">{code.tableName}</a></Item>
+					{/each}
+					<Item
+						on:click={() => {
+							copyCodeTable.insert('test');
+						}}>パンドラのコード</Item
+					>
 				</List>
 			</Content>
 		</Paper>
