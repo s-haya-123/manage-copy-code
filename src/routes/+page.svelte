@@ -24,18 +24,23 @@
 	};
 </script>
 
+<svelte:window on:keydown={(e)=>{
+    if (e.key === 'Enter') {
+        register();
+    }
+}} />
+
 <VerticalList gap={30}>
 	<ManageCopyCodeTitle />
 	<div class="item">
 		<Paper>
-			<Title>新規登録</Title>
+			<Title>新規登録(Enterで登録)</Title>
 			<Textfield
 				type="text"
 				bind:value={registeredText}
 				updateInvalid
 				label="タイトル"
 				style="width: 100%;"
-				on:focusout={register}
 			></Textfield>
 		</Paper>
 	</div>
