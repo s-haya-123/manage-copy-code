@@ -24,11 +24,13 @@
 	};
 </script>
 
-<svelte:window on:keydown={(e)=>{
-    if (e.key === 'Enter') {
-        register();
-    }
-}} />
+<svelte:window
+	on:keydown={(e) => {
+		if (e.key === 'Enter') {
+			register();
+		}
+	}}
+/>
 
 <VerticalList gap={30}>
 	<ManageCopyCodeTitle />

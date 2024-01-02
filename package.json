@@ -12,6 +12,7 @@
 		"format": "prettier --write ./src"
 	},
 	"devDependencies": {
+		"@smui/button": "7.0.0-beta.16",
 		"@smui/layout-grid": "7.0.0-beta.16",
 		"@smui/list": "7.0.0-beta.16",
 		"@smui/paper": "7.0.0-beta.16",

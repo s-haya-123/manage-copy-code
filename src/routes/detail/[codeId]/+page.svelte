@@ -8,15 +8,18 @@
 	import type { CopyCode } from '$lib/indexedDb/copyCodeDb.js';
 	import { onDestroy } from 'svelte';
 	import type { Unsubscriber } from 'svelte/motion';
+	import Button, { Label } from '@smui/button';
 
 	export let data;
 
 	let tableName: string = '';
 	let copyCodes: CopyCode[] = [];
+	let copyCodeStore: ReturnType<typeof createCopyCodeStore> | undefined;
 	let subscribe: Unsubscriber | undefined;
 
 	if (Number.isInteger(Number(data.codeId))) {
-		subscribe = createCopyCodeStore(Number(data.codeId)).subscribe((store) => {
+		copyCodeStore = createCopyCodeStore(Number(data.codeId))
+		subscribe = copyCodeStore.subscribe((store) => {
 			copyCodes = store;
 		});
 	}
@@ -28,6 +31,15 @@
 	const copyCode = (code: string) => () => {
 		navigator.clipboard.writeText(code);
 	};
+	const registerCopyCode = async () => {
+		if(!copyCodeStore) return;
+		const code = await navigator.clipboard.readText();
+		copyCodeStore.insert({
+			code,
+			tableId: Number(data.codeId),
+			date: new Date().toISOString()
+		});
+	}
 
 	onDestroy(() => {
 		subscribe?.();
@@ -38,8 +50,12 @@
 	<ManageCopyCodeTitle />
 	<div class="item">
 		<Paper>
-			<Title>{tableName}</Title>
-			
+			<div class="title">
+				<Title>{tableName}</Title>
+				<Button on:click={registerCopyCode} variant="raised">
+					<Label>コピーしたコードの登録</Label>
+				</Button>
+			</div>
 			<Separator />
 			<Content>
 				<List>
@@ -55,5 +71,11 @@
 <style>
 	.item {
 		width: 100%;
+	}
+	.title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 16px;
 	}
 </style>
