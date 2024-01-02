@@ -2,6 +2,7 @@
 	import { Item } from '@smui/list';
 	import Snackbar, { Actions, Label as SnackbarLabel } from '@smui/snackbar';
 	import IconButton from '@smui/icon-button';
+	import EllipseText from '$lib/EllipseText.svelte';
 
 	export let copyText: string;
 	export let date: string;
@@ -25,20 +26,11 @@
 </script>
 
 <Snackbar bind:this={snackbarWithClose}>
-	<SnackbarLabel><div class="ellipsis">コピーしました: {copyText}</div></SnackbarLabel>
+	<SnackbarLabel><EllipseText>コピーしました: {copyText}</EllipseText></SnackbarLabel>
 	<Actions>
 		<IconButton class="material-icons" title="Dismiss">close</IconButton>
 	</Actions>
 </Snackbar>
 <Item on:SMUI:action={copyCode(copyText)}>
-	<div class="ellipsis">{formatDate(date)} : {copyText}</div>
+	<EllipseText>{formatDate(date)} : {copyText}</EllipseText>
 </Item>
-
-<style>
-	.ellipsis {
-		text-overflow: ellipsis;
-		width: 100%;
-		overflow: hidden;
-		white-space: nowrap;
-	}
-</style>

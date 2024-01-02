@@ -10,6 +10,7 @@
 	import type { Unsubscriber } from 'svelte/motion';
 	import CopyItem from './CopyItem.svelte';
 	import RegisterButton from './RegisterButton.svelte';
+	import DislayCopyCode from './DislayCopyCode.svelte';
 
 	export let data;
 
@@ -40,7 +41,10 @@
 		<Paper>
 			<div class="title">
 				<Title>{tableName}</Title>
-				<RegisterButton {copyCodeStore} codeId={data.codeId} />
+				<div style:width={'40%'}>
+					<DislayCopyCode />
+					<RegisterButton {copyCodeStore} codeId={data.codeId} />
+				</div>
 			</div>
 			<Separator />
 			<Content>
