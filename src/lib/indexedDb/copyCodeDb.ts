@@ -14,7 +14,7 @@ export type CopyCode = Omit<IDBCopyCode, 'id'>;
 
 export class CopyCodeIndexedDB {
 	constructor(private db: IDBDatabase) {}
-	findAll(tableId: string): Promise<IDBCopyCode[]> {
+	findAll(tableId: number): Promise<IDBCopyCode[]> {
 		return new Promise((resolve, reject) => {
 			const transaction = this.db.transaction(objectStoreIdentify.name, 'readonly');
 			const objectStore = transaction.objectStore(objectStoreIdentify.name);

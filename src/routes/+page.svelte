@@ -4,9 +4,24 @@
 	import Textfield from '@smui/textfield';
 	import VerticalList from '$lib/VerticalList.svelte';
 	import ManageCopyCodeTitle from '$lib/ManageCopyCodeTitle.svelte';
-	import { copyCodeTable } from '$lib/store/copyCode';
+	import { copyCodeTable, initializeCopyCodeDb } from '$lib/store/copyCode';
+	import { goto } from '$app/navigation';
 
-	let registerText = '';
+	let registeredText = '';
+
+	const register = async () => {
+		if (registeredText === '') return;
+		Promise.all([copyCodeTable.insert(registeredText), navigator.clipboard.readText()]).then(
+			([tableId, code]) => {
+				initializeCopyCodeDb({
+					tableId,
+					code,
+					date: new Date().toISOString()
+				});
+				goto(`/detail/${tableId}`);
+			}
+		);
+	};
 </script>
 
 <VerticalList gap={30}>
@@ -16,27 +31,28 @@
 			<Title>新規登録</Title>
 			<Textfield
 				type="text"
-				bind:value={registerText}
+				bind:value={registeredText}
 				updateInvalid
 				label="タイトル"
 				style="width: 100%;"
+				on:focusout={register}
 			></Textfield>
 		</Paper>
 	</div>
 	<div class="item">
 		<Paper>
-			<Title>履歴</Title>
+			<Title>一覧</Title>
 			<Content>
 				<List class="demo-list">
 					<Separator />
 					{#each $copyCodeTable as code}
-						<Item><a href={`/detail/${code.id}`} class="item">{code.tableName}</a></Item>
+						<Item
+							on:click={() => {
+								goto(`/detail/${code.id}`);
+							}}
+							>{code.tableName}
+						</Item>
 					{/each}
-					<Item
-						on:click={() => {
-							copyCodeTable.insert('aaaaa');
-						}}>ああああああ</Item
-					>
 				</List>
 			</Content>
 		</Paper>
@@ -46,9 +62,5 @@
 <style>
 	.item {
 		width: 100%;
-	}
-	a {
-		text-decoration: none;
-		color: inherit;
 	}
 </style>
