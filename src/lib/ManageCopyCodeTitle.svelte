@@ -5,10 +5,6 @@
 	import type { Unsubscriber } from 'svelte/motion';
 	import IconButton from '@smui/icon-button/src/IconButton.svelte';
 	import { goto } from '$app/navigation';
-	import SyncOff from 'svelte-material-icons/SyncOff.svelte';
-	import Sync from 'svelte-material-icons/Sync.svelte';
-	import Tooltip, { Wrapper } from '@smui/tooltip';
-	import { syncVrcWorld } from '$lib/store/syncVrcWorld';
 	import SyncButton from '$lib/SyncButton.svelte';
 
 	let isTop = true;

@@ -1,44 +1,49 @@
-import { PathDb } from '$lib/indexedDb/pathDb';
-import { db } from '$lib/store/dbAccessStore';
+import { pathItem } from '$lib/store/pathStore';
 import { derived, writable, type Readable } from 'svelte/store';
 
 type VrcWorld =
 	| {
-			isSync: false;
+			mode: 'syncOff';
 	  }
 	| {
-			isSync: true;
-			path: string;
+			mode: 'prepare';
+	  }
+	| {
+			mode: 'sync';
 			world: string | undefined;
 	  };
-const pathStore = writable<string>('');
 const worldStore = writable<string>('');
-const pathDb = new PathDb(db);
+const isSyncStore = writable<boolean>(false);
 
-const syncVrcWorldStore = derived<[Readable<string>, Readable<string>], VrcWorld>(
-	[pathStore, worldStore],
-	([$path, $world], set) => {
-		if ($path !== '') {
+const syncVrcWorldStore = derived<
+	[Readable<boolean>, Readable<string>, Readable<string>],
+	VrcWorld
+>([isSyncStore, worldStore, pathItem], ([$isSync, $world, $path], set) => {
+	if ($isSync) {
+		if ($path === '') {
 			set({
-				isSync: true,
-				path: $path,
-				world: $world !== '' ? $world : undefined
+				mode: 'sync',
+				world: $world
 			});
 		} else {
 			set({
-				isSync: false
+				mode: 'prepare'
 			});
 		}
+	} else {
+		set({
+			mode: 'syncOff'
+		});
 	}
-);
+});
 
 export const syncVrcWorld = {
 	subscribe: syncVrcWorldStore.subscribe,
-	syncStart: (path: string) => {
-		pathStore.set(path);
+	syncStart: () => {
+		isSyncStore.set(true);
 	},
 	syncStop: () => {
-		pathStore.set('');
+		isSyncStore.set(false);
 	},
 	updateWorld: (world: string) => {
 		worldStore.set(world);

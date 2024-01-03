@@ -3,7 +3,7 @@ import { CopyCodeTableIndexedDB, type CopyCodeTable } from '$lib/indexedDb/copyC
 import { prepareDb } from '$lib/indexedDb/prepareDb';
 import { writable } from 'svelte/store';
 
-export const db = await prepareDb();
+const db = await prepareDb();
 
 export const createCopyCodeStore = (tableId: number) => {
 	const { subscribe, set, update } = writable<IDBCopyCode[]>([]);
