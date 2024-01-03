@@ -8,8 +8,24 @@
 	import { emit, listen } from '@tauri-apps/api/event'
 	import { onMount } from 'svelte';
 	import { isTauri } from '$lib/isTauri';
+	import { copyCodeTable, initializeCopyCodeDb } from '$lib/store/copyCode';
+	import { goto } from '$app/navigation';
 
 	let registeredText = '';
+
+	const register = async () => {
+		if (registeredText === '') return;
+		Promise.all([copyCodeTable.insert(registeredText), navigator.clipboard.readText()]).then(
+			([tableId, code]) => {
+				initializeCopyCodeDb({
+					tableId,
+					code,
+					date: new Date().toISOString()
+				});
+				goto(`/detail/${tableId}`);
+			}
+		);
+	};
 
 	const fileOpenTest = async () =>{
 		if(!isTauri()) {
@@ -31,7 +47,7 @@
 <svelte:window
 	on:keydown={(e) => {
 		if (e.key === 'Enter') {
-			fileOpenTest();
+			register();
 		}
 	}}
 />
@@ -56,14 +72,14 @@
 			<Content>
 				<List class="demo-list">
 					<Separator />
-					<!-- {#each $copyCodeTable as code}
+					{#each $copyCodeTable as code}
 						<Item
 							on:click={() => {
 								goto(`/detail/${code.id}`);
 							}}
 							>{code.tableName}
 						</Item>
-					{/each} -->
+					{/each}
 				</List>
 			</Content>
 		</Paper>
