@@ -6,6 +6,7 @@
 	import IconButton from '@smui/icon-button/src/IconButton.svelte';
 	import { goto } from '$app/navigation';
 	import SyncButton from '$lib/SyncButton.svelte';
+	import SettingButton from '$lib/SettingButton.svelte';
 
 	let isTop = true;
 	let subscribe: Unsubscriber;
@@ -40,6 +41,7 @@
 		</Section>
 		<Section align="end">
 			<SyncButton />
+			<SettingButton />
 		</Section>
 	</Row>
 </TopAppBar>

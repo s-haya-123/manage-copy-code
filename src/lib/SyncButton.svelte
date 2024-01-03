@@ -5,20 +5,13 @@
 	import Tooltip, { Wrapper } from '@smui/tooltip';
 	import { syncVrcWorld } from '$lib/store/syncVrcWorld';
 	import { isTauri } from '$lib/isTauri';
-	import { open } from '@tauri-apps/api/dialog';
 	import { pathItem } from '$lib/store/pathStore';
 	import { onDestroy, onMount } from 'svelte';
 	import type { CopyCodeTable } from '$lib/indexedDb/copyCodeTable';
 	import { copyCodeTable } from '$lib/store/dbAccessStore';
 	import { goto } from '$app/navigation';
 	import { emit, listen } from '@tauri-apps/api/event';
-
-	const fileOpen = async () => {
-		return (await open({
-			multiple: false,
-			directory: true
-		})) as string | undefined;
-	};
+	import { settingFilePath } from '$lib/settingFilePath';
 
 	let copyCodeTables: CopyCodeTable[] = [];
 
@@ -27,10 +20,7 @@
 			return;
 		}
 		if (value.mode === 'prepare') {
-			const path = await fileOpen();
-			if (path) {
-				pathItem.updatePath(path);
-			}
+			settingFilePath();
 		}
 	});
 	let unsubscriber2 = copyCodeTable.subscribe((value) => {
