@@ -9,6 +9,7 @@
 	import type { Unsubscriber } from 'svelte/store';
 	let snackbarError: Snackbar;
 	let errorText = '';
+	let beforePath = '';
 
 	let unsubscriber: Unsubscriber;
 	let unlistenFn: UnlistenFn;
@@ -25,13 +26,18 @@
 		unsubscriber = pathItem.subscribe((path) => {
 			if (!!path) {
 				emit('tail', path + '/test.log');
+				if (beforePath !== '') {
+					errorText = '再起動が必要です';
+					snackbarError.open();
+				}
 			}
+			beforePath = path;
 		});
 	});
-	onDestroy(()=> {
+	onDestroy(() => {
 		unlistenFn();
 		unsubscriber();
-	})
+	});
 </script>
 
 <Snackbar bind:this={snackbarError} class="demo-error">
