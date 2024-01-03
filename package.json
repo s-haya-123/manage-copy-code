@@ -41,5 +41,9 @@
 		"typescript": "^5.0.0",
 		"vite": "^5.0.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@tauri-apps/api": "^1.5.3",
+		"dialog": "link:@tauri-apps/api/dialog"
+	}
 }
