@@ -16,7 +16,15 @@ fn tail(app: &mut App, rx: Receiver<String>) {
       let path = rx.recv().unwrap();
       println!("I was invoked from JS! {}", path);
     
-      let mut file = File::open(&path).expect("failed to open file");
+      let file_open = File::open(&path);
+      let mut file = match file_open {
+        Ok(v) => v,
+        Err(e) => {
+          eprintln!("Error reading file: {}", e);
+          app_handler.emit_all("Err", "file error").unwrap();
+          return;
+        }
+      };
       file.seek(SeekFrom::End(0)).expect("failed to seek");
   
       let mut reader = BufReader::new(file);

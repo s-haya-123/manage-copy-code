@@ -22,8 +22,8 @@
 
 <TopAppBar variant="static" color="primary">
 	<Row>
-		{#if !isTop}
-			<Section>
+		<Section>
+			{#if !isTop}
 				<IconButton
 					class="material-icons"
 					on:click={() => {
@@ -32,17 +32,13 @@
 				>
 					arrow_back
 				</IconButton>
-			</Section>
-		{:else}
-			<Section>
+			{:else}
 				<!-- スタイルが崩れるので空のボタンを置いている -->
 				<IconButton disabled />
-			</Section>
-		{/if}
-		<Section>
+			{/if}
 			<BarTitle>セーブデータ管理</BarTitle>
 		</Section>
-		<Section>
+		<Section align="end">
 			<SyncButton />
 		</Section>
 	</Row>
