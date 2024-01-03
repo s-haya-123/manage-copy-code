@@ -20,7 +20,7 @@ const syncVrcWorldStore = derived<
 	VrcWorld
 >([isSyncStore, worldStore, pathItem], ([$isSync, $world, $path], set) => {
 	if ($isSync) {
-		if ($path === '') {
+		if ($path !== '') {
 			set({
 				mode: 'sync',
 				world: $world

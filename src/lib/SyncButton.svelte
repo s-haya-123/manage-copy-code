@@ -37,10 +37,7 @@
 		</IconButton>
 		<Tooltip>ワールドの監視中。クリックで解除</Tooltip>
 	{:else}
-		<IconButton
-			on:click={() => syncVrcWorld.syncStart()}
-			disabled={$syncVrcWorld.mode === 'prepare'}
-		>
+		<IconButton on:click={syncVrcWorld.syncStart} disabled={$syncVrcWorld.mode === 'prepare'}>
 			<SyncOff />
 		</IconButton>
 		<Tooltip>クリックで監視開始</Tooltip>
