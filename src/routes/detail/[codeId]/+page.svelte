@@ -1,10 +1,10 @@
 <script lang="ts">
 	import ManageCopyCodeTitle from '$lib/ManageCopyCodeTitle.svelte';
 	import VerticalList from '$lib/VerticalList.svelte';
-	import { createCopyCodeStore } from '$lib/store/copyCode.js';
+	import { createCopyCodeStore } from '$lib/store/dbAccessStore.js';
 	import List, { Separator } from '@smui/list';
 	import Paper, { Title, Content } from '@smui/paper';
-	import { copyCodeTable } from '$lib/store/copyCode';
+	import { copyCodeTable } from '$lib/store/dbAccessStore';
 	import type { CopyCode } from '$lib/indexedDb/copyCodeDb.js';
 	import { onDestroy } from 'svelte';
 	import type { Unsubscriber } from 'svelte/motion';

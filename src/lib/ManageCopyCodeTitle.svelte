@@ -5,6 +5,11 @@
 	import type { Unsubscriber } from 'svelte/motion';
 	import IconButton from '@smui/icon-button/src/IconButton.svelte';
 	import { goto } from '$app/navigation';
+	import SyncOff from 'svelte-material-icons/SyncOff.svelte';
+	import Sync from 'svelte-material-icons/Sync.svelte';
+	import Tooltip, { Wrapper } from '@smui/tooltip';
+	import { syncVrcWorld } from '$lib/store/syncVrcWorld';
+	import SyncButton from '$lib/SyncButton.svelte';
 
 	let isTop = true;
 	let subscribe: Unsubscriber;
@@ -34,14 +39,15 @@
 			</Section>
 		{:else}
 			<Section>
-                <!-- スタイルが崩れるので空のボタンを置いている -->
-				<IconButton
-                disabled
-                />
-            </Section>
+				<!-- スタイルが崩れるので空のボタンを置いている -->
+				<IconButton disabled />
+			</Section>
 		{/if}
 		<Section>
 			<BarTitle>セーブデータ管理</BarTitle>
+		</Section>
+		<Section>
+			<SyncButton />
 		</Section>
 	</Row>
 </TopAppBar>

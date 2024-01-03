@@ -19,6 +19,7 @@
 		"@smui/paper": "7.0.0-beta.16",
 		"@smui/snackbar": "7.0.0-beta.16",
 		"@smui/textfield": "7.0.0-beta.16",
+		"@smui/tooltip": "7.0.0-beta.16",
 		"@smui/top-app-bar": "7.0.0-beta.16",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/adapter-static": "^3.0.1",
@@ -44,6 +45,7 @@
 	"type": "module",
 	"dependencies": {
 		"@tauri-apps/api": "^1.5.3",
-		"dialog": "link:@tauri-apps/api/dialog"
+		"dialog": "link:@tauri-apps/api/dialog",
+		"svelte-material-icons": "^3.0.5"
 	}
 }

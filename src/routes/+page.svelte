@@ -5,10 +5,10 @@
 	import VerticalList from '$lib/VerticalList.svelte';
 	import ManageCopyCodeTitle from '$lib/ManageCopyCodeTitle.svelte';
 	import { open } from '@tauri-apps/api/dialog';
-	import { emit, listen } from '@tauri-apps/api/event'
+	import { emit, listen } from '@tauri-apps/api/event';
 	import { onMount } from 'svelte';
 	import { isTauri } from '$lib/isTauri';
-	import { copyCodeTable, initializeCopyCodeDb } from '$lib/store/copyCode';
+	import { copyCodeTable, initializeCopyCodeDb } from '$lib/store/dbAccessStore';
 	import { goto } from '$app/navigation';
 
 	let registeredText = '';
@@ -27,20 +27,20 @@
 		);
 	};
 
-	const fileOpenTest = async () =>{
-		if(!isTauri()) {
+	const fileOpenTest = async () => {
+		if (!isTauri()) {
 			return;
 		}
 		const selected = await open({
 			multiple: false,
 			directory: true
 		});
-		emit("tail", selected+'/test.log');
-	}
-	onMount(async ()=>{
-		await listen('World', event => {
-        console.log(`World ${event.payload} ${new Date()}`)
-      });
+		emit('tail', selected + '/test.log');
+	};
+	onMount(async () => {
+		await listen('World', (event) => {
+			console.log(`World ${event.payload} ${new Date()}`);
+		});
 	});
 </script>
 

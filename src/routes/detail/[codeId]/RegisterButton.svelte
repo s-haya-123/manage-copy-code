@@ -3,7 +3,7 @@
 
 	import Snackbar, { Actions, Label as SnackbarLabel } from '@smui/snackbar';
 	import IconButton from '@smui/icon-button';
-	import type { createCopyCodeStore } from '$lib/store/copyCode';
+	import type { createCopyCodeStore } from '$lib/store/dbAccessStore';
 
 	export let copyCodeStore: ReturnType<typeof createCopyCodeStore> | undefined;
 	export let codeId: string;
