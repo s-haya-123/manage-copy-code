@@ -13,16 +13,19 @@ fn tail(app: &mut App, rx: Receiver<String>) {
   let app_handler = app.app_handle();
 
     thread::spawn(move || {
+      let mut file = loop {
       let path = rx.recv().unwrap();
       println!("I was invoked from JS! {}", path);
     
       let file_open = File::open(&path);
-      let mut file = match file_open {
-        Ok(v) => v,
-        Err(e) => {
-          eprintln!("Error reading file: {}", e);
-          app_handler.emit_all("Err", "file error").unwrap();
-          return;
+        match file_open {
+          Ok(v) => {
+            break v;
+          },
+          Err(e) => {
+            eprintln!("Error reading file: {}", e);
+            app_handler.emit_all("Err", "FileLoadError").unwrap();
+          }
         }
       };
       file.seek(SeekFrom::End(0)).expect("failed to seek");

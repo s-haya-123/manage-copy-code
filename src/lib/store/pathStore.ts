@@ -13,6 +13,10 @@ const pathItemStore = () => {
 		updatePath: (path: string) => {
 			localStorage.setItem(key, path);
 			set(path);
+		},
+		resetPath: () => {
+			localStorage.setItem(key, '');
+			set('');
 		}
 	};
 };

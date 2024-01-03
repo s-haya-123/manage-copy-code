@@ -7,6 +7,7 @@
 	import { goto } from '$app/navigation';
 	import SyncButton from '$lib/SyncButton.svelte';
 	import SettingButton from '$lib/SettingButton.svelte';
+	import ErrorSnackBar from '$lib/ErrorSnackBar.svelte';
 
 	let isTop = true;
 	let subscribe: Unsubscriber;
@@ -20,6 +21,8 @@
 		subscribe();
 	});
 </script>
+
+<ErrorSnackBar />
 
 <TopAppBar variant="static" color="primary">
 	<Row>

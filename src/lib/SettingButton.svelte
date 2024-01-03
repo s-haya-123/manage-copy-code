@@ -11,9 +11,9 @@
 	const click = () => {
 		open = true;
 	};
-    const changePath = () => {
-        settingFilePath();
-    }
+	const changePath = () => {
+		settingFilePath();
+	};
 </script>
 
 <Dialog bind:open fullscreen aria-describedby="sheet-content">
@@ -29,9 +29,9 @@
 				{/if}
 			</div>
 			<IconButton on:click={changePath}>
-                <div class="buttonColor">
-                    <File/>
-                </div>
+				<div class="buttonColor">
+					<File />
+				</div>
 			</IconButton>
 		</div>
 	</Content>
@@ -47,7 +47,7 @@
 		justify-content: space-between;
 		padding: 10px;
 	}
-    .buttonColor {
-        color: black;
-    }
+	.buttonColor {
+		color: black;
+	}
 </style>
