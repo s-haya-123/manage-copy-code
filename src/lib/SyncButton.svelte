@@ -5,12 +5,11 @@
 	import Tooltip, { Wrapper } from '@smui/tooltip';
 	import { syncVrcWorld } from '$lib/store/syncVrcWorld';
 	import { isTauri } from '$lib/isTauri';
-	import { pathItem } from '$lib/store/pathStore';
 	import { onDestroy, onMount } from 'svelte';
 	import type { CopyCodeTable } from '$lib/indexedDb/copyCodeTable';
 	import { copyCodeTable } from '$lib/store/dbAccessStore';
 	import { goto } from '$app/navigation';
-	import { emit, listen } from '@tauri-apps/api/event';
+	import { listen, type UnlistenFn } from '@tauri-apps/api/event';
 	import { settingFilePath } from '$lib/settingFilePath';
 
 	let copyCodeTables: CopyCodeTable[] = [];
@@ -26,18 +25,14 @@
 	let unsubscriber2 = copyCodeTable.subscribe((value) => {
 		copyCodeTables = value;
 	});
-	let unsubscriber3 = pathItem.subscribe((path) => {
-		if (!!path) {
-			emit('tail', path + '/test.log');
-		}
-	});
+	let unlistenFn: UnlistenFn;
 
 	const grepWorldFromRegisteredList = (worldName: string, list: CopyCodeTable[]) => {
 		return list.find((copyCode) => copyCode.tableName === worldName);
 	};
 
 	onMount(async () => {
-		await listen('World', (event) => {
+		unlistenFn = await listen('World', (event) => {
 			const copyCodeTable = grepWorldFromRegisteredList(
 				(event.payload as string).trim(),
 				copyCodeTables
@@ -50,7 +45,7 @@
 	onDestroy(() => {
 		unsubscriber();
 		unsubscriber2();
-		unsubscriber3();
+		unlistenFn();
 	});
 </script>
 
