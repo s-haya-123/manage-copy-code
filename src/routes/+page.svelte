@@ -4,30 +4,34 @@
 	import Textfield from '@smui/textfield';
 	import VerticalList from '$lib/VerticalList.svelte';
 	import ManageCopyCodeTitle from '$lib/ManageCopyCodeTitle.svelte';
-	import { copyCodeTable, initializeCopyCodeDb } from '$lib/store/copyCode';
-	import { goto } from '$app/navigation';
+	import { open } from '@tauri-apps/api/dialog';
+	import { emit, listen } from '@tauri-apps/api/event'
+	import { onMount } from 'svelte';
+	import { isTauri } from '$lib/isTauri';
 
 	let registeredText = '';
 
-	const register = async () => {
-		if (registeredText === '') return;
-		Promise.all([copyCodeTable.insert(registeredText), navigator.clipboard.readText()]).then(
-			([tableId, code]) => {
-				initializeCopyCodeDb({
-					tableId,
-					code,
-					date: new Date().toISOString()
-				});
-				goto(`/detail/${tableId}`);
-			}
-		);
-	};
+	const fileOpenTest = async () =>{
+		if(!isTauri()) {
+			return;
+		}
+		const selected = await open({
+			multiple: false,
+			directory: true
+		});
+		emit("tail", selected+'/test.log');
+	}
+	onMount(async ()=>{
+		await listen('World', event => {
+        console.log(`World ${event.payload} ${new Date()}`)
+      });
+	});
 </script>
 
 <svelte:window
 	on:keydown={(e) => {
 		if (e.key === 'Enter') {
-			register();
+			fileOpenTest();
 		}
 	}}
 />
@@ -52,14 +56,14 @@
 			<Content>
 				<List class="demo-list">
 					<Separator />
-					{#each $copyCodeTable as code}
+					<!-- {#each $copyCodeTable as code}
 						<Item
 							on:click={() => {
 								goto(`/detail/${code.id}`);
 							}}
 							>{code.tableName}
 						</Item>
-					{/each}
+					{/each} -->
 				</List>
 			</Content>
 		</Paper>
